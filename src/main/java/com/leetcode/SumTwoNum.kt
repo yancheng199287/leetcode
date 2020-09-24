@@ -4,7 +4,10 @@ import com.leetcode.SumTwoNum.twoSum1
 import com.leetcode.SumTwoNum.twoSum2
 import com.leetcode.SumTwoNum.twoSum3
 import com.leetcode.SumTwoNum.twoSum4
+import com.leetcode.SumTwoNum.twoSum5
 import org.apache.commons.lang3.time.StopWatch
+import java.util.HashMap
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -114,7 +117,7 @@ object SumTwoNum {
 
     @JvmStatic
     fun twoSum4(nums: IntArray, target: Int): IntArray {
-        val map = HashMap<Int, Int>()
+        val map: HashMap<Int, Int> = HashMap<Int, Int>((nums.size / 0.75).toInt())
         val len = nums.size
         for (m in 0 until len) {
             map[nums[m]] = m
@@ -130,18 +133,38 @@ object SumTwoNum {
         }
         return result
     }
+
+
+    @JvmStatic
+    fun twoSum5(nums: IntArray, target: Int, map: HashMap<Int, Int>): IntArray {
+        val len = nums.size
+
+
+        for (m in 0 until len) {
+            val s = target - nums[m]
+            if (map.containsKey(s)) {
+                result[0] = map.get(s)!!
+                result[1] = m
+                return result
+            }
+        }
+        return result
+    }
 }
 
 
+//  在中间  3 4 12
+//在左边 4
+
 fun main() {
-    val len = 5000 * 10000
+    val len = 20 * 10000
     var nums = IntArray(len)
-    val target = 1000
+    val target = 65557898
     for (i in 0 until len) {
         nums[i] = (0..len).random()
     }
-    nums[len - 10] = 999
-    nums[15] = 1
+    nums[len/2-10000] = 55566660
+    nums[len/2+10000] = 9991238
 
     //  nums = intArrayOf(10, 20, 30, 40, 50, 60, 701, 200, 800)
 
@@ -151,25 +174,31 @@ fun main() {
     val result1 = twoSum1(nums, target)
     // println(nums.contentToString())
     watch.stop()
-    println("耗时： ${watch.time}  index:${result1.contentToString()}  result1:  ${nums[result1[0]]} + ${nums[result1[1]]} =? $target")
+    println("耗时： ${watch.time}毫秒  index:${result1.contentToString()}  result1:  ${nums[result1[0]]} + ${nums[result1[1]]} =? $target")
 
     watch.reset()
     watch.start()
     val result2 = twoSum2(nums, target)
     // println(nums.contentToString())
-    println("耗时： ${watch.time} index:${result2.contentToString()} result2:  ${nums[result2[0]]} + ${nums[result2[1]]} =? $target")
+    println("耗时： ${watch.time}毫秒 index:${result2.contentToString()} result2:  ${nums[result2[0]]} + ${nums[result2[1]]} =? $target")
 
     watch.reset()
     watch.start()
     val result3 = twoSum3(nums, target)
     // println(nums.contentToString())
-    println("耗时： ${watch.time} index:${result3.contentToString()} result3:  ${nums[result3[0]]} + ${nums[result3[1]]} =? $target")
+    println("耗时： ${watch.time}毫秒 index:${result3.contentToString()} result3:  ${nums[result3[0]]} + ${nums[result3[1]]} =? $target")
 
+
+    val map: HashMap<Int, Int> = HashMap<Int, Int>((nums.size / 0.75).toInt())
+    for (m in 0 until len) {
+        map[nums[m]] = m
+    }
     watch.reset()
     watch.start()
-    val result4 = twoSum4(nums, target)
+    val result4 = twoSum5(nums, target, map)
+    watch.stop()
     // println(nums.contentToString())
-    println("耗时： ${watch.time} index:${result4.contentToString()} result4:  ${nums[result4[0]]} + ${nums[result4[1]]} =? $target")
+    println("耗时： ${watch.getTime()}毫秒 ${watch.getTime(TimeUnit.MICROSECONDS)}微秒 index:${result4.contentToString()} result4:  ${nums[result4[0]]} + ${nums[result4[1]]} =? $target")
 
 }
 
