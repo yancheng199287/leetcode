@@ -31,6 +31,14 @@ import java.util.concurrent.TimeUnit
 链接：https://leetcode-cn.com/problems/two-sum
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
+
+/*方法1 使用遍历
+
+方法2 先排序再遍历  待优化，根据目标值在数组 1/4  1/2 1/4 各取样对比，找到合适的区间然后再去循环，充分利用排序的特性
+
+方法3 双指针
+
+方法四 map找差值*/
 object SumTwoNum {
 
 
@@ -163,8 +171,8 @@ fun main() {
     for (i in 0 until len) {
         nums[i] = (0..len).random()
     }
-    nums[len/2-10000] = 55566660
-    nums[len/2+10000] = 9991238
+    nums[len / 2 - 10000] = 55566660
+    nums[len / 2 + 10000] = 9991238
 
     //  nums = intArrayOf(10, 20, 30, 40, 50, 60, 701, 200, 800)
 
